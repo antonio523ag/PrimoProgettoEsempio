@@ -33,7 +33,7 @@ public class PrimoController {
         return "ciao "+nome+" "+eta;
     }
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
     public Utente getUtente(){
         Utente u= new Utente(1,"Antonio","Grillo", LocalDate.of(1989,12,7),"contactme@antoniogrillo.dev","P4ssw0rd!1");
 //        ObjectMapper mapper = new ObjectMapper();

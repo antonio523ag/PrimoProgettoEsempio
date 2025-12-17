@@ -21,7 +21,6 @@ public class UtenteServiceJpa implements UtenteService {
         this.automobileRepo = automobileRepo;
     }
 
-
     @Override
     public void registra(Utente u) {
         repo.save(u);

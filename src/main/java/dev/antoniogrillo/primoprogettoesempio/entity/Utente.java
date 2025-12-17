@@ -31,6 +31,9 @@ public class Utente {
     @ManyToMany
     @JoinTable(name="noleggi",joinColumns=@JoinColumn(name="noleggiatore_fk"),inverseJoinColumns=@JoinColumn(name="automobile_noleggiata_fk"))
     private List<Automobile> autoNoleggiate;
+    @ManyToOne
+    @JoinColumn(name="indirizzo_fk")
+    private Indirizzo indirizzo;
 
 
     public Utente(){}
@@ -98,6 +101,14 @@ public class Utente {
 
     public void setAutoNoleggiate(List<Automobile> autoNoleggiate) {
         this.autoNoleggiate = autoNoleggiate;
+    }
+
+    public Indirizzo getIndirizzo() {
+        return indirizzo;
+    }
+
+    public void setIndirizzo(Indirizzo indirizzo) {
+        this.indirizzo = indirizzo;
     }
 
     @JsonIgnore
