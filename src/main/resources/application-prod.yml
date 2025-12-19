@@ -1,0 +1,8 @@
+spring:
+  web:
+    error:
+      include-message: ALWAYS
+
+custom:
+  tag:
+    chiave: chiaveAbbastanzaLungaPerCodificareUnTokenJWT

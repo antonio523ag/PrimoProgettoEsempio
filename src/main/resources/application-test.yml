@@ -1,0 +1,7 @@
+spring:
+  web:
+    error:
+      include-message: ALWAYS
+      include-stacktrace: ALWAYS
+      include-binding-errors: always
+      include-exception: true

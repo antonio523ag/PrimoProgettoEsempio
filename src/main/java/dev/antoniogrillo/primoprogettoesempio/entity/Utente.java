@@ -2,11 +2,15 @@ package dev.antoniogrillo.primoprogettoesempio.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
+import java.util.Collection;
 import java.util.List;
 
 
@@ -14,7 +18,7 @@ import java.util.List;
 @Table(name = "elenco_utenti_db",uniqueConstraints ={
         @UniqueConstraint(name = "persona_univoca",columnNames = {"nome","cognome"}),
         @UniqueConstraint(name = "email_univoca",columnNames = "email")})
-public class Utente {
+public class Utente implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -28,12 +32,15 @@ public class Utente {
     private String email;
     private String password;
     private String urlFotoProfilo;
+    private Ruolo ruolo;
     @ManyToMany
     @JoinTable(name="noleggi",joinColumns=@JoinColumn(name="noleggiatore_fk"),inverseJoinColumns=@JoinColumn(name="automobile_noleggiata_fk"))
     private List<Automobile> autoNoleggiate;
     @ManyToOne
     @JoinColumn(name="indirizzo_fk")
     private Indirizzo indirizzo;
+
+
 
 
     public Utente(){}
@@ -87,8 +94,18 @@ public class Utente {
         this.email = email;
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority("ROLE_"+ruolo.name()));
+    }
+
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
     }
 
     public void setPassword(String password) {
@@ -129,5 +146,12 @@ public class Utente {
                 '}';
     }
 
+    public Ruolo getRuolo() {
+        return ruolo;
+    }
+
+    public void setRuolo(Ruolo ruolo) {
+        this.ruolo = ruolo;
+    }
 
 }
