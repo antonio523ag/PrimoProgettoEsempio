@@ -10,6 +10,7 @@ import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -28,7 +29,7 @@ public class LoginTest {
     @Test
     public void testTuttoOK() throws Exception {
         String path="/utente/login?email=m.rossi@gmail.com&password=123456";
-        MockHttpServletRequestBuilder builder=MockMvcRequestBuilders.post(path)
+        RequestBuilder builder=MockMvcRequestBuilders.post(path)
                         .accept(MediaType.APPLICATION_JSON_VALUE);
         ResultMatcher controlloRisultato1=MockMvcResultMatchers.status().is2xxSuccessful();
         ResultMatcher controlloRisultato2=MockMvcResultMatchers.jsonPath("$.nome").value("Mario");
@@ -46,7 +47,7 @@ public class LoginTest {
     @Test
     public void testUtenteNonTrovato() throws Exception {
         String path="/utente/login?email=s.castellucci@gmail.com&password=123456";
-        MockHttpServletRequestBuilder builder=MockMvcRequestBuilders.post(path)
+        RequestBuilder builder=MockMvcRequestBuilders.post(path)
                 .accept(MediaType.APPLICATION_JSON_VALUE);
         ResultMatcher controlloRisultato1=MockMvcResultMatchers.status().isNotFound();
 
