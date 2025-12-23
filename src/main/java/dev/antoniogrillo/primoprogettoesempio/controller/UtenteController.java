@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -66,8 +68,8 @@ public class UtenteController {
     }
 
     @GetMapping("/trovaAutomobiliNoleggiate")
-    public List<Automobile> trovaAutomobiliNoleggiate(UsernamePasswordAuthenticationToken token){
-        Utente u=(Utente) token.getPrincipal();
+    public List<Automobile> trovaAutomobiliNoleggiate(@AuthenticationPrincipal UserDetails token){
+        Utente u=(Utente) token;
         return utenteService.trovaAutomobiliNoleggiate(u.getId());
     }
 }
