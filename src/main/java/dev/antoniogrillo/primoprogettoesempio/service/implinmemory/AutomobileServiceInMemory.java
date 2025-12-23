@@ -1,5 +1,6 @@
 package dev.antoniogrillo.primoprogettoesempio.service.implinmemory;
 
+import dev.antoniogrillo.primoprogettoesempio.dto.response.AutomobiliPaginateDTO;
 import dev.antoniogrillo.primoprogettoesempio.entity.Automobile;
 import dev.antoniogrillo.primoprogettoesempio.entity.Utente;
 import dev.antoniogrillo.primoprogettoesempio.service.def.AutomobileService;
@@ -34,9 +35,10 @@ public class AutomobileServiceInMemory implements AutomobileService {
     }
 
     @Override
-    public List<Automobile> visualizzaTutte() {
-        return new ArrayList<>(automobili);
+    public AutomobiliPaginateDTO visualizzaTutte(int numeroElementi, int pagina) {
+        return null;
     }
+
 
     @Override
     public void modifica(Automobile a) {

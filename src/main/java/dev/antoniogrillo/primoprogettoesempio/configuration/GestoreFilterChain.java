@@ -8,6 +8,7 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -27,6 +28,7 @@ public class GestoreFilterChain {
     @Bean
     protected SecurityFilterChain getChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
+                .headers(c->c.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(a->
@@ -35,6 +37,8 @@ public class GestoreFilterChain {
                                 .requestMatchers("/utente/aggiungiNoleggio/*").hasAnyRole(Ruolo.UTENTE.name(),Ruolo.ADMIN.name())
                                 .requestMatchers("/utente/aggiungiNoleggio/**").hasAnyRole(Ruolo.ADMIN.name())
                                 .requestMatchers("/automobile/aggiungi").hasRole(Ruolo.ADMIN.name())
+                                .requestMatchers("/utente/trovaAutomobiliNoleggiate").authenticated()
+                                .requestMatchers("/all/**").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)

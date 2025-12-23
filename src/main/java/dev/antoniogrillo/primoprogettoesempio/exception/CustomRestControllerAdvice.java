@@ -5,6 +5,7 @@ import dev.antoniogrillo.primoprogettoesempio.mapper.MessageMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
@@ -30,4 +31,11 @@ public class CustomRestControllerAdvice {
         MessageErrorDTO dto=messageMapper.toMessageErrorDTO(e,request);
         return ResponseEntity.badRequest().body(dto);
     }
+
+    @ExceptionHandler(ObjectOptimisticLockingFailureException.class)
+    public ResponseEntity<MessageErrorDTO> objectOptimisticLockingFailureExceptionHandler(
+            ObjectOptimisticLockingFailureException e, WebRequest request){
+        MessageErrorDTO dto=messageMapper.toMessageErrorDTO(e,request);
+        return ResponseEntity.badRequest().body(dto);
+            }
 }

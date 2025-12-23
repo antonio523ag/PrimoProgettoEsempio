@@ -1,13 +1,15 @@
 package dev.antoniogrillo.primoprogettoesempio.controller;
 
+import dev.antoniogrillo.primoprogettoesempio.dto.response.AutomobiliPaginateDTO;
 import dev.antoniogrillo.primoprogettoesempio.entity.Automobile;
 import dev.antoniogrillo.primoprogettoesempio.service.def.AutomobileService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/automobile")
+@RequestMapping("/all/automobile")
 public class AutomobileController {
 
     private final AutomobileService service;
@@ -42,9 +44,19 @@ public class AutomobileController {
         return service.trovaAutomobiliNoleggiate(idUtente);
     }
 
+    @GetMapping("/visualizzaTutte/{numeroElementi}/{pagina}")
+    public ResponseEntity<AutomobiliPaginateDTO> visualizzaTutti(@PathVariable int pagina, @PathVariable int numeroElementi){
+        return ResponseEntity.ok(service.visualizzaTutte(numeroElementi,pagina));
+    }
+
     @GetMapping("/visualizzaTutte")
-    public List<Automobile> visualizzaTutti(){
-        return service.visualizzaTutte();
+    public ResponseEntity<AutomobiliPaginateDTO> visualizzaTutti(){
+        return ResponseEntity.ok(service.visualizzaTutte(50,0));
+    }
+
+    @GetMapping("/visualizzaTutte/{numeroElementi}")
+    public ResponseEntity<AutomobiliPaginateDTO> visualizzaTutti(@PathVariable int numeroElementi){
+        return ResponseEntity.ok(service.visualizzaTutte(numeroElementi,0));
     }
 
 

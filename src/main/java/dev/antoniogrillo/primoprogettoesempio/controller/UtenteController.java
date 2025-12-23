@@ -64,4 +64,10 @@ public class UtenteController {
     public List<Automobile> trovaAutomobiliNoleggiate(@PathVariable long idUtente){
         return utenteService.trovaAutomobiliNoleggiate(idUtente);
     }
+
+    @GetMapping("/trovaAutomobiliNoleggiate")
+    public List<Automobile> trovaAutomobiliNoleggiate(UsernamePasswordAuthenticationToken token){
+        Utente u=(Utente) token.getPrincipal();
+        return utenteService.trovaAutomobiliNoleggiate(u.getId());
+    }
 }
